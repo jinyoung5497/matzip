@@ -1,13 +1,12 @@
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import RootNavigator from './src/navigations/root/RootNavigator';
 
-function App(): JSX.Element {
+function App() {
   return (
-    <SafeAreaView>
-      <Text>텍스트</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({});
 
 export default App;
