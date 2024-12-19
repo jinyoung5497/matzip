@@ -1,10 +1,14 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-export default function FeedHomeScreen() {
+function FeedHomeScreen() {
   return (
     <View>
-      <Text>피드</Text>
+      <Text>피드홈</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({});
+
+export default FeedHomeScreen;

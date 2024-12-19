@@ -1,55 +1,61 @@
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthHomeScreen from '../../screens/auth/AuthHomeScreen';
 import LoginScreen from '../../screens/auth/LoginScreen';
-import {authNavigations} from '../../constants';
-import SignupScreen from '../../screens/auth/SignupScreen';
+import SignScreen from '../../screens/auth/SignScreen';
+import {authNaviagtions} from '../../constants';
 
 export type AuthStackParamList = {
-  [authNavigations.AUTH_HOME]: undefined;
-  [authNavigations.LOGIN]: undefined;
-  [authNavigations.SIGNUP]: undefined;
+  [authNaviagtions.AUTH_HOME]: undefined;
+  [authNaviagtions.LOGIN]: undefined;
+  [authNaviagtions.SIGNUP]: undefined;
 };
 
-const stack = createStackNavigator<AuthStackParamList>();
+const Stack = createStackNavigator<AuthStackParamList>();
 
-export default function AuthStackNavigator() {
+function AuthStackNavigator() {
   return (
-    <stack.Navigator
+    <Stack.Navigator
       screenOptions={{
         cardStyle: {
           backgroundColor: 'white',
         },
         headerStyle: {
-          backgroundColor: 'white',
           shadowColor: 'gray',
+          backgroundColor: 'white',
         },
         headerTitleStyle: {
           fontSize: 15,
         },
         headerTintColor: 'black',
       }}>
-      <stack.Screen
-        name={authNavigations.AUTH_HOME}
+      <Stack.Screen
+        name={authNaviagtions.AUTH_HOME}
         component={AuthHomeScreen}
         options={{
-          headerTitle: '',
+          headerTitle: ' ',
           headerShown: false,
         }}
       />
-      <stack.Screen
-        name={authNavigations.LOGIN}
+      <Stack.Screen
+        name={authNaviagtions.LOGIN}
         component={LoginScreen}
         options={{
           headerTitle: '로그인',
         }}
       />
-      <stack.Screen
-        name={authNavigations.SIGNUP}
-        component={SignupScreen}
+      <Stack.Screen
+        name={authNaviagtions.SIGNUP}
+        component={SignScreen}
         options={{
           headerTitle: '회원가입',
         }}
       />
-    </stack.Navigator>
+    </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({});
+
+export default AuthStackNavigator;
