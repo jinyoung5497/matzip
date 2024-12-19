@@ -1,15 +1,15 @@
 import React, {ForwardedRef, forwardRef, useRef} from 'react';
 import {
   Dimensions,
-  Pressable,
   StyleSheet,
-  Text,
   TextInput,
-  TextInputProps,
   View,
+  TextInputProps,
+  Text,
+  Pressable,
 } from 'react-native';
 import {colors} from '../constants';
-import {mergeRefs} from '../utils';
+import {mergeRefs} from '../utils/common';
 
 interface InputFieldProps extends TextInputProps {
   disabled?: boolean;
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   disabled: {
-    borderColor: colors.GRAY_200,
+    backgroundColor: colors.GRAY_200,
     color: colors.GRAY_700,
   },
   inputError: {

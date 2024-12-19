@@ -16,6 +16,10 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "frontend";
   }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
+  }
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. Here we use a util class {@link
@@ -29,10 +33,5 @@ public class MainActivity extends ReactActivity {
         getMainComponentName(),
         // If you opted-in for the New Architecture, we enable the Fabric Renderer.
         DefaultNewArchitectureEntryPoint.getFabricEnabled());
-  }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(null);
   }
 }

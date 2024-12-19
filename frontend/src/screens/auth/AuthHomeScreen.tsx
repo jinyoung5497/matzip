@@ -1,39 +1,41 @@
-import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
 import {
   Button,
-  View,
+  Dimensions,
+  Image,
   SafeAreaView,
   StyleSheet,
-  Image,
-  Dimensions,
+  View,
 } from 'react-native';
 import {AuthStackParamList} from '../../navigations/stack/AuthStackNavigator';
-import {authNavigations} from '../../constants/navigations';
+import {authNaviagtions} from '../../constants/navigations';
 import CustomButton from '../../components/CustomButton';
 
-type AuthHomeScreenProps = StackScreenProps<AuthStackParamList>;
+type AuthHomeScreenProps = StackScreenProps<
+  AuthStackParamList,
+  typeof authNaviagtions.AUTH_HOME
+>;
 
-export default function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
+function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           resizeMode="contain"
           style={styles.image}
-          source={require('../../assets/MATZIP.png')}
+          source={require('../../assets/matzip.png')}
         />
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton
           label="로그인하기"
-          variant="filled"
-          onPress={() => navigation.navigate(authNavigations.LOGIN)}
+          onPress={() => navigation.navigate(authNaviagtions.LOGIN)}
         />
         <CustomButton
           label="회원가입하기"
           variant="outlined"
-          onPress={() => navigation.navigate(authNavigations.SIGNUP)}
+          onPress={() => navigation.navigate(authNaviagtions.SIGNUP)}
         />
       </View>
     </SafeAreaView>
@@ -43,8 +45,9 @@ export default function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 30,
     alignItems: 'center',
+    marginHorizontal: 30,
+    marginVertical: 30,
   },
   imageContainer: {
     flex: 1.5,
@@ -56,6 +59,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+    alignItems: 'center',
     gap: 10,
   },
 });
+
+export default AuthHomeScreen;
