@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-export default function CalendarHomeScreen() {
+function CalendarHomeScreen() {
   return (
     <View>
-      <Text>calendar</Text>
+      <Text>캘린더</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({});
+
+export default CalendarHomeScreen;
