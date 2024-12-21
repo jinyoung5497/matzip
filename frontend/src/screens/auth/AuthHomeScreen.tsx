@@ -8,9 +8,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {AuthStackParamList} from '../../navigations/stack/AuthStackNavigator';
-import {authNaviagtions} from '../../constants/navigations';
-import CustomButton from '../../components/CustomButton';
+import {AuthStackParamList} from '@/navigations/stack/AuthStackNavigator';
+import {authNaviagtions} from '@/constants/navigations';
+import CustomButton from '@/components/CustomButton';
 
 type AuthHomeScreenProps = StackScreenProps<
   AuthStackParamList,
@@ -24,7 +24,7 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
         <Image
           resizeMode="contain"
           style={styles.image}
-          source={require('../../assets/matzip.png')}
+          source={require('@/assets/matzip.png')}
         />
       </View>
       <View style={styles.buttonContainer}>
