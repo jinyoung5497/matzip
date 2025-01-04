@@ -76,7 +76,7 @@ function useGetProfile(queryOptions?: UseQueryCustomOptions<ResponseProfile>) {
 }
 
 function useLogout(mutationOptions?: UseMutationCustomOptions) {
-  return useMutation<void>({
+  return useMutation({
     mutationFn: logout,
     onSuccess: () => {
       removeHeader('Authorization');
