@@ -8,13 +8,15 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Octicons from '@react-native-vector-icons/octicons';
 import CustomButton from '@/components/CustomButton';
 import useForm from '@/hooks/useForm';
-import {validateAddPost, validateLogin} from '@/utils';
+import {getDateWithSeparator, validateAddPost, validateLogin} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost';
 import {MarkerColor} from '@/types/domain';
 import useGetAddress from '@/hooks/useGetAddress';
 import MarkerSelector from '@/components/MarkerSelector';
 import ScoreInput from '@/components/ScoreInput';
+import DatePickerOption from '@/components/DatePickerOption';
+import useModal from '@/hooks/useModal';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -31,7 +33,10 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
   });
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
   const [score, setScore] = useState(5);
+  const [date, setDate] = useState(new Date());
+  const [isPicked, setIsPicked] = useState(false);
   const address = useGetAddress(location);
+  const {isVisible, show, hide} = useModal();
 
   const handleSelectMarker = (name: MarkerColor) => {
     setMarkerColor(name);
@@ -41,9 +46,18 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
     setScore(value);
   };
 
+  const handleConfirmDate = () => {
+    setIsPicked(true);
+    hide();
+  };
+
+  const handleChangeDate = (pickedDate: Date) => {
+    setDate(pickedDate);
+  };
+
   const handleSubmit = () => {
     const body = {
-      date: new Date(),
+      date,
       title: addPost.values.title,
       description: addPost.values.description,
       color: markerColor,
@@ -76,7 +90,12 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
               <Octicons name="location" size={16} color={colors.GRAY_500} />
             }
           />
-          <CustomButton variant="outlined" size="large" label="날짜 선택" />
+          <CustomButton
+            variant="outlined"
+            size="large"
+            label={isPicked ? getDateWithSeparator(date, '. ') : '날짜 선택'}
+            onPress={show}
+          />
           <InputField
             placeholder="제목을 입력하세요."
             error={addPost.errors.title}
@@ -102,6 +121,12 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <DatePickerOption
+            isVisible={isVisible}
+            date={date}
+            onChangeDate={handleChangeDate}
+            onConfirmDate={handleConfirmDate}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
