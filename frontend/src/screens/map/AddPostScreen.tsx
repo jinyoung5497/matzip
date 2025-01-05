@@ -12,6 +12,9 @@ import {validateAddPost, validateLogin} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost';
 import {MarkerColor} from '@/types/domain';
+import useGetAddress from '@/hooks/useGetAddress';
+import MarkerSelector from '@/components/MarkerSelector';
+import ScoreInput from '@/components/ScoreInput';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -28,7 +31,15 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
   });
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
   const [score, setScore] = useState(5);
-  const [address, setAddress] = useState('');
+  const address = useGetAddress(location);
+
+  const handleSelectMarker = (name: MarkerColor) => {
+    setMarkerColor(name);
+  };
+
+  const handleChangeScore = (value: number) => {
+    setScore(value);
+  };
 
   const handleSubmit = () => {
     const body = {
@@ -43,6 +54,7 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
       {address, ...location, ...body},
       {
         onSuccess: () => navigation.goBack(),
+        onError: error => console.error(error.message, body, address, location),
       },
     );
   };
@@ -51,14 +63,14 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
     navigation.setOptions({
       headerRight: () => AddPostHeaderRight(handleSubmit),
     });
-  }, []);
+  }, [handleSubmit, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.contentContainer}>
         <View style={styles.inputContainer}>
           <InputField
-            value=""
+            value={address}
             disabled
             icon={
               <Octicons name="location" size={16} color={colors.GRAY_500} />
@@ -84,6 +96,12 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
             returnKeyType="next"
             {...addPost.getTextInputProps('description')}
           />
+          <MarkerSelector
+            score={score}
+            markerColor={markerColor}
+            onPressMarker={handleSelectMarker}
+          />
+          <ScoreInput score={score} onChangeScore={handleChangeScore} />
         </View>
       </ScrollView>
     </SafeAreaView>

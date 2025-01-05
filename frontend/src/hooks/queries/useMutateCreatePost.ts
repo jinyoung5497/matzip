@@ -4,7 +4,6 @@ import {queryKeys} from '@/constants';
 import {UseMutationCustomOptions} from '@/types/common';
 import {Marker} from '@/types/domain';
 import {useMutation} from '@tanstack/react-query';
-import React from 'react';
 
 export default function useMutateCreatePost(
   mutationOptions?: UseMutationCustomOptions,
@@ -12,10 +11,6 @@ export default function useMutateCreatePost(
   return useMutation({
     mutationFn: createPost,
     onSuccess: newPost => {
-      // queryClient.invalidateQueries({
-      //   queryKey: [queryKeys.MARKER, queryKeys.GET_MARKERS],
-      // });
-
       queryClient.setQueryData<Marker[]>(
         [queryKeys.MARKER, queryKeys.GET_MARKERS],
         existingMarkers => {
