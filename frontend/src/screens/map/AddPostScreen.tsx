@@ -139,7 +139,11 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
           <View style={styles.imagesViewer}>
             <ImageInput onChange={imagePicker.handleChange} />
-            <PreviewImageList imageUris={imagePicker.imageUris} />
+            <PreviewImageList
+              imageUris={imagePicker.imageUris}
+              onDelete={imagePicker.delete}
+              onChangeOrder={imagePicker.changeOrder}
+            />
           </View>
           <DatePickerOption
             isVisible={isVisible}
