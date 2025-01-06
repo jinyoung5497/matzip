@@ -3,7 +3,15 @@ import {colors, mapNavigations} from '@/constants';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Octicons from '@react-native-vector-icons/octicons';
 import CustomButton from '@/components/CustomButton';
@@ -17,6 +25,10 @@ import MarkerSelector from '@/components/MarkerSelector';
 import ScoreInput from '@/components/ScoreInput';
 import DatePickerOption from '@/components/DatePickerOption';
 import useModal from '@/hooks/useModal';
+import ImageInput from '@/components/ImageInput';
+import usePermission from '@/hooks/usePermission';
+import useImagePicker from '@/hooks/useImagePicker';
+import PreviewImageList from '@/components/PreviewImageList';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -37,6 +49,10 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
   const [isPicked, setIsPicked] = useState(false);
   const address = useGetAddress(location);
   const {isVisible, show, hide} = useModal();
+  const imagePicker = useImagePicker({
+    initialImages: [],
+  });
+  usePermission('PHOTO');
 
   const handleSelectMarker = (name: MarkerColor) => {
     setMarkerColor(name);
@@ -121,6 +137,10 @@ export default function AddPostScreen({route, navigation}: AddPostScreenProps) {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <View style={styles.imagesViewer}>
+            <ImageInput onChange={imagePicker.handleChange} />
+            <PreviewImageList imageUris={imagePicker.imageUris} />
+          </View>
           <DatePickerOption
             isVisible={isVisible}
             date={date}
@@ -145,5 +165,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     gap: 20,
     marginBottom: 20,
+  },
+  imagesViewer: {
+    flexDirection: 'row',
   },
 });
